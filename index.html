@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Touchdown</title>
+<style>
+:root{--site-primary:#102c52;--site-secondary:#d84b26;--site-background:#071426;--site-on-primary:#ffffff;--site-on-secondary:#ffffff;--site-on-background:#f3f6fb;--site-font-body:Inter,Arial,sans-serif;--site-font-heading:Impact,'Arial Narrow',sans-serif;--site-heading-scale:1;--site-spacing-scale:1;--site-radius-scale:1;--site-decoration-opacity:1;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--site-background);color:var(--site-on-background);font-family:var(--site-font-body);min-height:100vh}.app{min-height:100vh;background:linear-gradient(145deg,#0b1d35,#071426 55%,#101d2d);padding:24px;}.top{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto 24px}.brand{font:clamp(32px,5vw,56px)/.9 var(--site-font-heading);letter-spacing:2px;color:white}.brand span{color:#f05a31}.tag{font-size:11px;letter-spacing:3px;color:#9eb0c7;margin-top:8px}.pill{border:1px solid #34506d;border-radius:30px;padding:8px 13px;color:#b9c9dc;font-size:12px}.wrap{max-width:1200px;margin:auto}.panel{background:#10243c;border:1px solid #29435e;border-radius:16px;padding:22px;box-shadow:0 12px 32px #0003}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:stretch}.hero-main{padding:clamp(25px,5vw,54px);background:linear-gradient(125deg,#153b64,#10243c);position:relative;overflow:hidden}.hero-main:after{content:'🏈';position:absolute;font-size:190px;right:3%;bottom:-30px;opacity:.12;transform:rotate(-25deg)}h1,h2,h3{margin:0 0 12px}h1{font:clamp(42px,7vw,76px)/.92 var(--site-font-heading);letter-spacing:1px}h2{font:28px var(--site-font-heading);letter-spacing:1px}h3{font-size:16px}.muted{color:#9fb1c7;line-height:1.5}.btn{border:0;border-radius:9px;background:#e4512b;color:white;font-weight:800;padding:12px 18px;cursor:pointer;letter-spacing:.4px}.btn:hover{filter:brightness(1.12)}.btn.secondary{background:#254462;border:1px solid #46617d}.btn.ghost{background:transparent;border:1px solid #49617b;color:#dbe7f4}.btn:disabled{opacity:.45;cursor:not-allowed}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.stack{display:grid;gap:12px}.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:18px}.team{display:flex;align-items:center;gap:10px;text-align:left;background:#0b1b2e;border:1px solid #29435e;color:white;border-radius:10px;padding:12px;cursor:pointer;min-height:62px}.team.selected{border:2px solid #f05a31;background:#24374b}.logo{width:34px;height:34px;display:grid;place-items:center;border-radius:50%;font-weight:900;background:#213d5b;color:#fff;flex-shrink:0}.team small{display:block;color:#9fb1c7;font-size:10px;margin-top:3px}.hidden{display:none!important}.section-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}.position-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}.pos{background:#0b1b2e;border:1px solid #29435e;border-radius:10px;padding:12px}.pos label{font-size:11px;color:#9fb1c7;display:block;margin-bottom:7px;letter-spacing:1px}.pos input,.pos select{width:100%;background:#152b43;color:#fff;border:1px solid #45617e;border-radius:7px;padding:10px}.statrow{display:flex;gap:10px;flex-wrap:wrap}.stat{flex:1;min-width:100px;background:#0a1a2c;padding:14px;border-radius:10px}.stat b{font-size:25px;display:block}.stat small{color:#9fb1c7}.schedule{display:grid;gap:8px}.game-row{display:grid;grid-template-columns:60px 1fr auto auto;align-items:center;gap:12px;padding:12px;background:#0a1a2c;border:1px solid #263f59;border-radius:9px}.week{font-size:11px;color:#8ea5bf}.badge{font-size:11px;background:#243d59;padding:6px 8px;border-radius:20px;color:#c8d8e9}.field{background:repeating-linear-gradient(90deg,#17613e 0,#17613e 9.8%,#1c7048 9.8%,#1c7048 19.6%);border:5px solid #e5e9e6;border-radius:12px;padding:18px;color:white;position:relative;overflow:hidden}.yard{display:flex;justify-content:space-between;font-size:11px;font-weight:900;opacity:.8}.ballspot{height:72px;display:flex;align-items:center;justify-content:center;position:relative}.ball{font-size:30px;filter:drop-shadow(0 3px 2px #0008)}.game-layout{display:grid;grid-template-columns:1fr 290px;gap:16px}.play-controls{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.play-controls button{min-height:65px}.playlog{background:#09192a;border-radius:9px;padding:12px;min-height:110px;color:#bfd0e2;font-size:13px;line-height:1.55}.scoreboard{display:flex;justify-content:space-between;align-items:center;background:#09192a;padding:15px;border-radius:10px;margin-bottom:12px}.score{font:36px var(--site-font-heading)}.notice{background:#402b1d;border:1px solid #87502b;color:#ffd6b4;border-radius:9px;padding:12px;font-size:13px;margin:12px 0}.standings{width:100%;border-collapse:collapse;font-size:13px}.standings td,.standings th{padding:9px;border-bottom:1px solid #29435e;text-align:left}.standings th{color:#9fb1c7}.champ{font-size:42px;text-align:center;padding:26px}.footer{color:#7188a3;text-align:center;font-size:11px;margin:24px}
+@media(max-width:800px){.hero,.grid2,.game-layout{grid-template-columns:1fr}.game-row{grid-template-columns:42px 1fr auto}.game-row .badge{display:none}.app{padding:14px}.top{margin-bottom:16px}}
+
+/* Madden-style live match controls */
+.field-live{padding:0;border:0;background:#145b38;min-height:0;aspect-ratio:2/1;border-radius:12px;box-shadow:0 12px 28px #0005}
+#fieldCanvas{display:block;width:100%;height:auto;aspect-ratio:2/1;border-radius:9px;touch-action:none}
+.field-overlay{position:absolute;left:14px;right:14px;top:12px;display:flex;justify-content:space-between;pointer-events:none;font-size:10px;font-weight:900;letter-spacing:1.5px;text-shadow:0 2px 4px #000}
+.controller{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;background:#09192a;border:1px solid #29435e;border-radius:12px;padding:12px}
+.controller-left{display:flex;align-items:center;gap:14px;min-width:0}
+.dpad{display:grid;justify-items:center;gap:4px;flex:0 0 auto}
+.dpad>div{display:flex;gap:4px}
+.dpad button{width:39px;height:35px;border:1px solid #45617e;border-radius:7px;background:#1c3855;color:#fff;font-size:16px;font-weight:900;touch-action:none}
+.keyhelp{font-size:10px;line-height:1.8;color:#9fb1c7;letter-spacing:.3px}
+.controller-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.controller-actions .btn{padding:10px 8px;font-size:11px;min-height:42px}
+@media(max-width:800px){.controller{grid-template-columns:1fr}.controller-left{justify-content:center}.keyhelp{font-size:9px}.game-layout{grid-template-columns:1fr}}
+
+</style>
+<link rel="icon" type="image/png" sizes="48x48" href="data:image/png;base64,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">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#102c52">
+<meta name="application-name" content="Touchdown">
+<meta name="apple-mobile-web-app-title" content="Touchdown">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="description" content="Touchdown — build a lineup for any NFL franchise and play a full 17-game season plus the playoffs.">
+</head>
+<body><main class="app"><header class="top"><div><div class="brand">TOUCH<span>DOWN</span></div><div class="tag">BUILD YOUR TEAM. OWN THE SEASON.</div></div><div class="pill">NFL FRANCHISE MODE</div></header><div class="wrap">
+<section id="home" class="hero"><div class="panel hero-main"><div class="pill">YOUR ROAD TO THE SUPER BOWL</div><h1>TAKE THE<br><span style="color:#f05a31">FIELD.</span></h1><p class="muted">Choose your favorite NFL franchise. Build your lineup, take on the league, fight through the playoffs, and play the Super Bowl if you make it.</p><div class="actions"><button class="btn" onclick="show('choose')">START YOUR SEASON →</button></div></div><div class="panel stack"><h2>THE FRANCHISE CHALLENGE</h2><div class="statrow"><div class="stat"><b>32</b><small>REAL NFL TEAMS</small></div><div class="stat"><b>17</b><small>REGULAR-SEASON GAMES</small></div></div><div class="statrow"><div class="stat"><b>7</b><small>PLAYOFF TEAMS PER CONFERENCE</small></div><div class="stat"><b>1</b><small>SUPER BOWL CHAMPION</small></div></div><p class="muted">No made-up opponents. Your schedule is built from actual NFL franchises.</p></div></section>
+<section id="choose" class="panel hidden"><div class="section-head"><div><h2>CHOOSE YOUR NFL TEAM</h2><div class="muted">Pick the franchise you want to lead.</div></div><button class="btn ghost" onclick="show('home')">← BACK</button></div><div class="team-grid" id="teams"></div><div class="actions"><button class="btn" id="teamNext" disabled onclick="show('roster')">CONTINUE TO LINEUP →</button></div></section>
+<section id="roster" class="panel hidden"><div class="section-head"><div><h2>BUILD YOUR STARTING LINEUP</h2><div class="muted" id="rosterTeam">Choose the players who take the field at every position.</div></div><button class="btn ghost" onclick="show('choose')">← TEAMS</button></div><div class="notice">Customize every position with your own player names. Set the overall rating to shape how your team performs.</div><div class="position-grid" id="positions"></div><div class="actions"><button class="btn" onclick="show('seasonmode')">SAVE LINEUP →</button></div></section>
+<section id="seasonmode" class="panel hidden"><div class="section-head"><div><h2>HOW DO YOU WANT TO PLAY?</h2><div class="muted">Your franchise. Your season.</div></div><button class="btn ghost" onclick="show('roster')">← LINEUP</button></div><div class="grid2"><div class="panel"><h3>🏈 PLAY THE MATCHES</h3><p class="muted">Take control of your offense in each game. Call runs, passes, field goals, and punts. Earn your playoff spot on the field.</p><button class="btn" onclick="startSeason('play')">PLAY MY SEASON</button></div><div class="panel"><h3>📈 SIMULATE THE SEASON</h3><p class="muted">Simulate all 17 regular-season games and see if your team earns a playoff berth. You must play the Super Bowl if you reach it.</p><button class="btn secondary" onclick="startSeason('sim')">SIMULATE SEASON</button></div></div></section>
+<section id="dashboard" class="hidden"><div class="section-head"><div><h2 id="dashTitle">YOUR FRANCHISE</h2><div class="muted" id="dashSub"></div></div><button class="btn ghost" onclick="show('home')">EXIT TO HOME</button></div><div class="statrow" id="stats"></div><div class="grid2" style="margin-top:18px"><div class="panel"><div class="section-head"><h2>SEASON SCHEDULE</h2><span class="badge" id="phase">REGULAR SEASON</span></div><div class="schedule" id="schedule"></div></div><div class="panel"><h2>LEAGUE STANDINGS</h2><div class="muted" style="margin-bottom:12px">Your conference race to the playoffs.</div><div id="table"></div><div class="actions"><button class="btn secondary" id="simRest" onclick="simulateRemaining()">SIMULATE REMAINING GAMES</button></div></div></div></section>
+<section id="match" class="panel hidden"><div class="section-head"><div><h2 id="matchTitle">GAME DAY</h2><div class="muted" id="matchInfo">Regular season</div></div><button class="btn ghost" onclick="backDashboard()">← SCHEDULE</button></div><div class="scoreboard"><div><div id="homeLabel">YOUR TEAM</div><div class="score" id="homeScore">0</div></div><div style="text-align:center"><b id="quarter">Q1</b><div class="muted" id="clock">15:00</div><div class="badge" id="down">1st & 10</div></div><div style="text-align:right"><div id="awayLabel">OPPONENT</div><div class="score" id="awayScore">0</div></div></div><div class="game-layout"><div><div class="field field-live"><canvas id="fieldCanvas" width="1000" height="500" aria-label="Interactive American football field"></canvas><div class="field-overlay"><span id="possessionLabel">YOUR OFFENSE</span><span id="targetLabel">TARGET: 1</span></div></div><div class="notice" id="situation">Line up and press SNAP to start the play.</div><div class="controller"><div class="controller-left"><div class="dpad"><button onpointerdown="pressKey('ArrowUp',true)" onpointerup="pressKey('ArrowUp',false)" onpointerleave="pressKey('ArrowUp',false)">▲</button><div><button onpointerdown="pressKey('ArrowLeft',true)" onpointerup="pressKey('ArrowLeft',false)" onpointerleave="pressKey('ArrowLeft',false)">◀</button><button onpointerdown="pressKey('ArrowDown',true)" onpointerup="pressKey('ArrowDown',false)" onpointerleave="pressKey('ArrowDown',false)">▼</button><button onpointerdown="pressKey('ArrowRight',true)" onpointerup="pressKey('ArrowRight',false)" onpointerleave="pressKey('ArrowRight',false)">▶</button></div></div><div class="keyhelp">WASD / ARROWS MOVE<br>SHIFT SPRINT · E SWITCH<br>1–4 SELECT RECEIVER · P PASS<br>SPACE DIVE / TACKLE</div></div><div class="controller-actions"><button class="btn" id="snapBtn" onclick="snapPlay()">🏈 SNAP / HIKE</button><button class="btn secondary" onclick="passBall()">🎯 PASS</button><button class="btn secondary" onclick="switchPlayer()">🔁 SWITCH</button><button class="btn secondary" onpointerdown="pressKey('Shift',true)" onpointerup="pressKey('Shift',false)" onpointerleave="pressKey('Shift',false)">⚡ SPRINT</button><button class="btn secondary" onclick="diveTackle()">🛡 TACKLE / DIVE</button><button class="btn ghost" onclick="specialTeams('kick')">FIELD GOAL</button><button class="btn ghost" onclick="specialTeams('punt')">PUNT</button></div></div></div><div class="stack"><h3>GAME CENTER</h3><div class="playlog" id="log">Your players are lined up. Take control and drive downfield!</div><div class="muted">Control the ball carrier with your keyboard or the on-screen pad. Pass to receivers, avoid tackles, and cross the goal line.</div><div class="stat"><b id="controlledName">QB #12</b><small>PLAYER YOU CONTROL</small></div><button class="btn ghost" onclick="finishMatch(false)">FORFEIT GAME</button></div></div></section>
+<section id="champion" class="panel hidden"><div class="champ">🏆</div><h1 style="text-align:center">SUPER BOWL CHAMPIONS!</h1><p class="muted" style="text-align:center" id="champText">You did it.</p><div class="actions" style="justify-content:center"><button class="btn" onclick="location.reload()">START A NEW FRANCHISE</button></div></section>
+<div class="footer">TOUCHDOWN • FRANCHISE MODE • NFL TEAM SEASON EXPERIENCE</div></div></main>
+<script>
+const teams=[['Arizona Cardinals','ARI','🔴'],['Atlanta Falcons','ATL','🔴'],['Baltimore Ravens','BAL','🟣'],['Buffalo Bills','BUF','🔵'],['Carolina Panthers','CAR','🔵'],['Chicago Bears','CHI','🟠'],['Cincinnati Bengals','CIN','🟠'],['Cleveland Browns','CLE','🟤'],['Dallas Cowboys','DAL','⭐'],['Denver Broncos','DEN','🟠'],['Detroit Lions','DET','🩵'],['Green Bay Packers','GB','🟢'],['Houston Texans','HOU','🔴'],['Indianapolis Colts','IND','🔵'],['Jacksonville Jaguars','JAX','🟢'],['Kansas City Chiefs','KC','🔴'],['Las Vegas Raiders','LV','⚫'],['Los Angeles Chargers','LAC','⚡'],['Los Angeles Rams','LAR','🐏'],['Miami Dolphins','MIA','🩵'],['Minnesota Vikings','MIN','🟣'],['New England Patriots','NE','🔵'],['New Orleans Saints','NO','⚜️'],['New York Giants','NYG','🔵'],['New York Jets','NYJ','🟢'],['Philadelphia Eagles','PHI','🦅'],['Pittsburgh Steelers','PIT','🟡'],['San Francisco 49ers','SF','🔴'],['Seattle Seahawks','SEA','🟢'],['Tampa Bay Buccaneers','TB','🔴'],['Tennessee Titans','TEN','🩵'],['Washington Commanders','WAS','🔴']];
+const positions=['QB','RB','WR1','WR2','TE','LT','LG','C','RG','RT','LE','DT1','DT2','RE','LOLB','MLB','ROLB','CB1','CB2','FS','SS','K','P'];
+const defaults={QB:'Quarterback',RB:'Running Back',WR1:'Wide Receiver 1',WR2:'Wide Receiver 2',TE:'Tight End',LT:'Left Tackle',LG:'Left Guard',C:'Center',RG:'Right Guard',RT:'Right Tackle',LE:'Left Defensive End',DT1:'Defensive Tackle 1',DT2:'Defensive Tackle 2',RE:'Right Defensive End',LOLB:'Left Outside Linebacker',MLB:'Middle Linebacker',ROLB:'Right Outside Linebacker',CB1:'Cornerback 1',CB2:'Cornerback 2',FS:'Free Safety',SS:'Strong Safety',K:'Kicker',P:'Punter'};
+let selected=null,mode='play',record=[],schedule=[],current=null,gameState=null,week=0,playoffRound=0,teamRating=78;
+function show(id){document.querySelectorAll('.wrap>section').forEach(s=>s.classList.add('hidden'));document.getElementById(id).classList.remove('hidden');window.scrollTo(0,0)}
+const teamGrid=document.getElementById('teams');teams.forEach(t=>{let b=document.createElement('button');b.className='team';b.innerHTML=`<span class="logo">${t[2]}</span><span><b>${t[0]}</b><small>${t[1]}</small></span>`;b.onclick=()=>{selected=t;document.querySelectorAll('.team').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');document.getElementById('teamNext').disabled=false};teamGrid.appendChild(b)});
+positions.forEach(p=>{let d=document.createElement('div');d.className='pos';d.innerHTML=`<label>${p} — ${defaults[p]}</label><input id="name-${p}" value="${p==='QB'?'Your Franchise QB':p==='RB'?'Your Starting RB':defaults[p]+' 1'}" maxlength="28"><select id="rate-${p}"><option value="90">Elite • 90</option><option value="85">Star • 85</option><option value="80" selected>Starter • 80</option><option value="75">Solid • 75</option><option value="70">Rookie • 70</option><option value="60">Developing • 60</option></select>`;document.getElementById('positions').appendChild(d)});
+document.getElementById('teamNext').onclick=()=>{document.getElementById('rosterTeam').textContent=`${selected[0]} • Set the name and rating for all 23 starting positions.`;show('roster')};
+function getRating(){return Math.round(positions.reduce((s,p)=>s+Number(document.getElementById('rate-'+p).value),0)/positions.length)}
+function startSeason(m){mode=m;teamRating=getRating();let others=teams.filter(t=>t!==selected);let seed=teams.findIndex(t=>t===selected);schedule=[];for(let i=0;i<17;i++){let opp=others[(seed*7+i*11+i%3*5)%others.length];schedule.push({week:i+1,opp,done:false,score:0,against:0,result:'Upcoming'})}record=[];week=0;playoffRound=0;renderDash();show('dashboard');if(mode==='sim')simulateRemaining()}
+function renderDash(){document.getElementById('dashTitle').textContent=selected[0].toUpperCase();document.getElementById('dashSub').textContent=`${selected[0]} • ${teamRating} overall • ${record.filter(x=>x.win).length}-${record.filter(x=>!x.win).length}`;let w=record.filter(x=>x.win).length,l=record.length-w;document.getElementById('stats').innerHTML=`<div class="stat"><b>${w}-${l}</b><small>WIN-LOSS RECORD</small></div><div class="stat"><b>${record.reduce((s,x)=>s+x.score,0)}</b><small>POINTS SCORED</small></div><div class="stat"><b>${Math.max(0,17-record.length)}</b><small>GAMES LEFT</small></div><div class="stat"><b>${teamRating}</b><small>TEAM OVERALL</small></div>`;document.getElementById('schedule').innerHTML=schedule.map((g,i)=>`<div class="game-row"><span class="week">WK ${g.week}</span><div><b>${selected[1]} vs ${g.opp[1]}</b><div class="muted">${g.opp[0]}</div></div><span class="badge">${g.result}</span>${g.done?`<b>${g.score}-${g.against}</b>`:`<button class="btn" onclick="openMatch(${i})">${mode==='sim'?'VIEW':'PLAY'}</button>`}</div>`).join('');let sorted=teams.map((t,i)=>({t,w:i===teams.indexOf(selected)?w:Math.max(2,Math.min(14,Math.round(8+(Math.sin(i*17+seedNum())*3)+(i%4))))})).sort((a,b)=>b.w-a.w);document.getElementById('table').innerHTML=`<table class="standings"><tr><th>#</th><th>TEAM</th><th>W</th></tr>${sorted.slice(0,8).map((x,i)=>`<tr><td>${i+1}</td><td>${x.t[0]} ${x.t===selected?'★':''}</td><td>${x.w}</td></tr>`).join('')}</table>`;document.getElementById('simRest').classList.toggle('hidden',record.length===17);document.getElementById('phase').textContent=record.length<17?'REGULAR SEASON':playoffRound?'PLAYOFFS':'SEASON COMPLETE'}
+function seedNum(){return teams.indexOf(selected)}
+function simulateOne(i){let g=schedule[i];if(g.done)return;let diff=(teamRating-78)/7;g.score=Math.max(3,Math.round(23+Math.sin((i+1)*4+seedNum())*8+diff*2));g.against=Math.max(0,Math.round(22+Math.cos((i+2)*3+seedNum())*8-diff*1.5));g.result=g.score>g.against?'WIN':g.score===g.against?'TIE':'LOSS';g.done=true;record.push({win:g.score>g.against,score:g.score,against:g.against});}
+function simulateRemaining(){for(let i=0;i<17;i++)simulateOne(i);renderDash();if(record.length===17)checkPlayoffs()}
+function openMatch(i){current=i;let g=schedule[i];if(g.done){alert(`${g.result}: ${g.score} - ${g.against}`);return}gameState={home:0,away:0,quarter:1,clock:900,down:1,toGo:10,spot:25,poss:true,plays:0};document.getElementById('matchTitle').textContent=`WEEK ${g.week} • GAME DAY`;document.getElementById('matchInfo').textContent=`${selected[0]} vs ${g.opp[0]}`;document.getElementById('homeLabel').textContent=selected[1];document.getElementById('awayLabel').textContent=g.opp[1];document.getElementById('log').textContent='Kickoff! Your offense takes the field.';updateGame();show('match')}
+function ordinal(n){return n===1?'1st':n===2?'2nd':n===3?'3rd':'4th'}
+function updateGame(){let s=gameState;document.getElementById('homeScore').textContent=s.home;document.getElementById('awayScore').textContent=s.away;document.getElementById('quarter').textContent='Q'+s.quarter;document.getElementById('clock').textContent=`${Math.floor(s.clock/60)}:${String(s.clock%60).padStart(2,'0')}`;document.getElementById('down').textContent=`${ordinal(s.down)} & ${s.toGo}`;document.getElementById('situation').textContent=`Ball on your ${s.spot}-yard line • ${ordinal(s.down)} and ${s.toGo}`}
+function play(type){let s=gameState;if(!s||s.quarter>4)return;let log='',gain=0;let skill=(teamRating-75)/100;if(type==='run'){gain=Math.round(Math.random()*8+2+skill*5);log=Math.random()<.18?'TACKLED FOR A LOSS!':`Run up the middle for ${gain} yards.`;if(log.startsWith('TACKLED'))gain=-2}else if(type==='pass'){let r=Math.random();if(r<.13){log='INTERCEPTED! The defense takes over.';s.away+=Math.random()<.2?7:0;s.spot=25;s.down=1;s.toGo=10;s.poss=false}else if(r<.35){log='Incomplete pass.';gain=0}else{gain=Math.round(7+Math.random()*19+skill*7);log=`Complete pass! Gain of ${gain} yards.`}}else if(type==='kick'){if(s.spot>=45){s.home+=3;log='FIELD GOAL IS GOOD! +3 points.';s.spot=25;s.down=1;s.toGo=10}else{log='Too far out. Field goal attempt missed!';s.spot=25;s.down=1;s.toGo=10;s.poss=false}}else{log='Punt downfield. The opponent takes possession.';s.spot=25;s.down=1;s.toGo=10;s.poss=false}
+if(type==='run'||(type==='pass'&&gain>0)){s.spot+=gain;s.toGo-=gain;if(s.spot>=100){s.home+=7;log='TOUCHDOWN! Six points and the extra point is good!';s.spot=25;s.down=1;s.toGo=10}else if(s.toGo<=0){s.down=1;s.toGo=10;log+=' FIRST DOWN!'}else{s.down++;if(s.down>4){log+=' TURNOVER ON DOWNS.';s.spot=25;s.down=1;s.toGo=10;s.poss=false}}}else if(type==='pass'&&gain===0){s.down++;if(s.down>4){log+=' TURNOVER ON DOWNS.';s.spot=25;s.down=1;s.toGo=10;s.poss=false}}
+let elapsed=25+Math.floor(Math.random()*26);s.clock=Math.max(0,s.clock-elapsed);s.plays++;if(s.plays%5===0||s.clock===0){let oppScore=Math.random()<.3?3:Math.random()<.08?7:0;s.away+=oppScore;if(oppScore)log+=` Opponent scores ${oppScore}.`;s.clock=900;s.quarter++;if(s.quarter===3)log+=' Halftime!';}
+document.getElementById('log').textContent=log;updateGame();if(s.quarter>4||s.plays>=22){if(s.home===s.away){s.home+=3;log+=' OVERTIME: your team wins with a field goal!';document.getElementById('log').textContent=log}finishMatch(true)}}
+function recordMatchResult(completed){let g=schedule[current],s=gameState;if(!g||g.done)return;g.score=s.home;g.against=s.away;g.done=true;g.result=s.home>s.away?'WIN':s.home===s.away?'TIE':'LOSS';record.push({win:s.home>s.away,score:s.home,against:s.away});renderDash();show('dashboard');if(record.length===17)checkPlayoffs()}
+function backDashboard(){show('dashboard')}
+function checkPlayoffs(){if(document.getElementById('phase').textContent==='PLAYOFFS')return;let wins=record.filter(x=>x.win).length;let qualified=wins>=9;if(!qualified){document.getElementById('dashSub').textContent+=` • Season over — ${wins} wins, playoff cutoff not reached.`;document.getElementById('phase').textContent='OFFSEASON';return}document.getElementById('phase').textContent='PLAYOFFS';document.getElementById('simRest').classList.add('hidden');let opp=teams.filter(t=>t!==selected).sort((a,b)=>a[0].localeCompare(b[0]))[(seedNum()*3+4)%31];document.getElementById('schedule').innerHTML+=`<div class="notice"><b>🏆 PLAYOFF BERTH EARNED!</b><br>Your next opponent: ${opp[0]}. Win through the playoffs to reach the Super Bowl.</div><button class="btn" onclick="startPlayoff(0)">PLAY WILD CARD ROUND →</button>`}
+function startPlayoff(round){playoffRound=round+1;let opponents=teams.filter(t=>t!==selected);let opp=opponents[(seedNum()*5+round*7+3)%31];current=-1;gameState={home:0,away:0,quarter:1,clock:900,down:1,toGo:10,spot:25,poss:true,plays:0};document.getElementById('matchTitle').textContent=['WILD CARD','DIVISIONAL ROUND','CONFERENCE CHAMPIONSHIP','SUPER BOWL'][round];document.getElementById('matchInfo').textContent=`${selected[0]} vs ${opp[0]} • WIN OR GO HOME`;document.getElementById('homeLabel').textContent=selected[1];document.getElementById('awayLabel').textContent=opp[1];document.getElementById('log').textContent='Playoff football. Every play matters.';let old=finishMatch;window.updateGame();show('match');window.finishMatch=function(done){let s=gameState,win=s.home>=s.away;window.finishMatch=old;if(round===3){show('champion');document.getElementById('champText').textContent=win?`${selected[0]} are Super Bowl champions! Final score ${s.home}-${s.away}.`:`${selected[0]} fought hard in the Super Bowl. Final score ${s.home}-${s.away}. Start a new franchise to try again.`;return}if(win){show('dashboard');document.getElementById('schedule').innerHTML+=`<div class="notice">You won the ${['Wild Card','Divisional','Conference Championship'][round]}! <button class="btn" onclick="startPlayoff(${round+1})">NEXT PLAYOFF ROUND →</button></div>`}else{show('dashboard');document.getElementById('dashSub').textContent='Playoff run ended. Better luck next season.'}}}
+</script>
+<script>
+// Live on-field control layer. This replaces the old choose-a-play-only match flow.
+const legacyFinishMatch = recordMatchResult;
+let fieldEngine = null;
+let keyState = Object.create(null);
+let fieldRafStarted = false;
+let playoffOpponentName = '';
+const canvas = document.getElementById('fieldCanvas');
+const ctx = canvas.getContext('2d');
+const ownColorByTeam = {
+  ARI:'#97233f',ATL:'#a71930',BAL:'#241773',BUF:'#00338d',CAR:'#0085ca',CHI:'#0b1f3a',CIN:'#fb4f14',CLE:'#311d00',DAL:'#003594',DEN:'#fb4f14',DET:'#0076b8',GB:'#203731',HOU:'#03202f',IND:'#002c5f',JAX:'#006778',KC:'#e31837',LV:'#a5acaf',LAC:'#0080c6',LAR:'#003594',MIA:'#008e97',MIN:'#4f2683',NE:'#002244',NO:'#d3bc8d',NYG:'#0b2265',NYJ:'#125740',PHI:'#004c54',PIT:'#ffb612',SF:'#aa0000',SEA:'#002244',TB:'#d50a0a',TEN:'#4b92db',WAS:'#5a1414'
+};
+const ownNames = ['QB','C','LG','RG','LT','RT','RB','FB','TE','WR1','WR2'];
+const ownNums = [12,62,65,73,74,78,28,40,87,11,17];
+const oppNums = [8,60,66,71,72,77,25,44,88,10,16];
+const receiverSlots = [9,10,8,6];
+function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+function teamShort(){return selected?selected[1]:'HOME';}
+function initLiveMatch(){
+  const s=gameState;
+  if(!s)return;
+  fieldEngine={own:[],opp:[],live:false,side:s.poss===false?'defense':'offense',carrier:0,control:0,target:0,flight:null,elapsed:0,scrimmage:0,startedAt:0,playNumber:0,done:false,log:'Players are set. Press SNAP / HIKE to start.',dive:false};
+  makeFormation();
+  document.getElementById('log').textContent=fieldEngine.log;
+  document.getElementById('snapBtn').textContent='🏈 SNAP / HIKE';
+  updateGame();
+  drawField();
+  document.getElementById('controlledName').textContent=playerLabel();
+  document.getElementById('possessionLabel').textContent=fieldEngine.side==='offense'?'YOUR OFFENSE':'YOUR DEFENSE';
+  if(!fieldRafStarted){fieldRafStarted=true;requestAnimationFrame(liveLoop);}
+}
+function makeFormation(){
+  const s=gameState,e=fieldEngine;
+  const line=100+s.spot*8;
+  const ownBase=s.poss===false?line+55:line-48;
+  const oppBase=s.poss===false?line-95:line+125;
+  const ownPos=[[-24,250],[-8,250],[-14,205],[-14,295],[18,165],[18,335],[-72,190],[-66,310],[28,125],[24,80],[24,420]];
+  const oppPos=[[0,250],[30,205],[30,295],[54,155],[54,345],[88,250],[112,125],[112,375],[145,90],[145,410],[165,250]];
+  e.own=ownPos.map((a,i)=>({x:clamp(ownBase+a[0],75,925),y:a[1],n:ownNums[i],role:ownNames[i],team:'own',speed:2.15}));
+  e.opp=oppPos.map((a,i)=>({x:clamp(oppBase+a[0],75,925),y:a[1],n:oppNums[i],role:'DEF',team:'opp',speed:1.5}));
+  if(s.poss===false){
+    // Flip the attacking direction for the opponent's possession.
+    e.opp=e.opp.map(p=>({...p,x:1000-p.x}));
+    e.own=e.own.map(p=>({...p,x:1000-p.x}));
+    e.carrier=0;e.control=5;e.side='defense';
+  }else{e.carrier=0;e.control=0;e.side='offense';}
+  e.scrimmage=s.poss===false?e.opp[0].x:e.own[0].x;e.elapsed=0;e.flight=null;e.target=0;e.dive=false;e.done=false;e.midfieldBonusUsed=false;
+  e.ownColor='#c83b36';
+  e.oppColor='#1b4e91';
+  const cn=document.getElementById('controlledName');if(cn)cn.textContent=playerLabel();
+}
+function playerLabel(){
+  if(!fieldEngine)return 'QB';
+  const arr=fieldEngine.own;
+  const p=arr[fieldEngine.control]||arr[0];
+  return `${p.role} #${p.n}`;
+}
+function snapPlay(){
+  const e=fieldEngine,s=gameState;if(!e||!s||e.live||e.done)return;
+  e.live=true;e.elapsed=0;e.startedAt=performance.now();e.log=e.side==='offense'?'SNAP! Find a lane or hit a receiver.':'Opponent snaps the ball. Get to the runner!';
+  document.getElementById('log').textContent=e.log;
+  document.getElementById('snapBtn').textContent='PLAY IN PROGRESS';
+}
+function pressKey(k,on){keyState[k]=on;}
+function switchPlayer(){
+  const e=fieldEngine;if(!e||e.live===false)return;
+  if(e.side==='offense'){
+    const choices=receiverSlots;
+    let ix=choices.indexOf(e.control);e.control=choices[(ix+1+choices.length)%choices.length];
+    e.log=`Switched control to ${playerLabel()}.`;
+  }else{e.control=(e.control+1)%e.own.length;e.log=`Defender selected: ${playerLabel()}.`;}
+  document.getElementById('controlledName').textContent=playerLabel();document.getElementById('log').textContent=e.log;
+}
+function selectTarget(n){if(!fieldEngine)return;fieldEngine.target=clamp(n,0,3);document.getElementById('targetLabel').textContent=`TARGET: ${fieldEngine.target+1}`;}
+function passBall(){
+  const e=fieldEngine;if(!e||!e.live||e.side!=='offense'||e.flight||e.control!==e.carrier){
+    if(e&&e.side==='offense'&&e.control!==e.carrier){e.control=e.carrier;document.getElementById('controlledName').textContent=playerLabel();}
+    return;
+  }
+  const targetIndex=receiverSlots[e.target];
+  const receiver=e.own[targetIndex];
+  if(!receiver)return;
+  e.flight={from:{x:e.own[e.carrier].x,y:e.own[e.carrier].y},to:receiver,t:0,targetIndex};
+  e.log=`Pass in the air to ${receiver.role} #${receiver.n}!`;
+  document.getElementById('log').textContent=e.log;
+}
+function diveTackle(){
+  const e=fieldEngine;if(!e||!e.live)return;
+  if(e.side==='defense'){
+    const d=e.own[e.control],runner=e.opp[e.carrier];
+    if(Math.hypot(d.x-runner.x,d.y-runner.y)<56){endLivePlay('BIG TACKLE!');}
+    else{e.dive=true;e.log='Dive tackle! Close the gap to the runner.';document.getElementById('log').textContent=e.log;}
+  }else{e.dive=true;e.log='You lowered your shoulder and dove forward!';document.getElementById('log').textContent=e.log;}
+}
+function specialTeams(type){
+  const s=gameState,e=fieldEngine;if(!s||!e||e.live||e.done||e.side!=='offense')return;
+  if(type==='kick'){
+    if(s.spot>=55){s.home+=3;e.log='FIELD GOAL IS GOOD! +3 points.';}else{e.log='Field goal is out of range. The kick is no good.';}
+  }else{e.log='Punt away! The opponent takes possession.';}
+  s.poss=false;s.down=1;s.toGo=10;const land=s.spot+35;s.spot=type==='kick'?25:(land>=95?20:100-land);advanceClock();makeFormation();updateGame();document.getElementById('log').textContent=e.log;drawField();
+}
+function advanceClock(){
+  const s=gameState;s.clock=Math.max(0,s.clock-38);s.plays=(s.plays||0)+1;
+  if(s.plays%5===0){s.quarter++;s.clock=900;}
+  updateGame();
+  if(s.quarter>4||s.plays>=20){completeLiveMatch();}
+}
+function endLivePlay(message){
+  const e=fieldEngine,s=gameState;if(!e||!e.live||e.done)return;
+  e.live=false;e.done=true;
+  const runner=(e.side==='offense'?e.own:e.opp)[e.carrier];
+  let gain=e.side==='offense'?Math.round((runner.x-e.scrimmage)/8):Math.round((e.scrimmage-runner.x)/8);
+  gain=clamp(gain,-12,70);
+  let text=message||'Tackled!';
+  if(e.side==='offense'){
+    if(runner.x>=900){s.home+=7;s.spot=25;s.poss=false;s.down=1;s.toGo=10;text='TOUCHDOWN! You crossed the goal line! +7';}
+    else{s.spot=clamp(s.spot+gain,1,99);s.toGo=Math.max(0,s.toGo-gain);if(s.toGo===0){s.down=1;s.toGo=10;text+=' FIRST DOWN!';}else{s.down++;text+=` Gain of ${gain} yards.`;if(s.down>4){s.spot=100-s.spot;s.poss=false;s.down=1;s.toGo=10;text+=' TURNOVER ON DOWNS!';}}}
+  }else{
+    if(runner.x<=100){s.away+=7;s.spot=25;s.poss=true;s.down=1;s.toGo=10;text='THE OPPONENT SCORES A TOUCHDOWN!';}
+    else{s.spot=clamp(s.spot+gain,1,99);s.toGo=Math.max(0,s.toGo-gain);if(s.toGo===0){s.down=1;s.toGo=10;text+=` Opponent gains ${gain} yards and a first down.`;}else{s.down++;text+=` Opponent gains ${gain} yards.`;if(s.down>4){s.spot=100-s.spot;s.poss=true;s.down=1;s.toGo=10;text+=' TURNOVER! Your offense takes over.';}}}
+  }
+  e.log=text;document.getElementById('log').textContent=text;advanceClock();
+  if(!e.done)return;
+  if(document.getElementById('match').classList.contains('hidden'))return;
+  makeFormation();document.getElementById('snapBtn').textContent='🏈 NEXT PLAY / SNAP';
+  document.getElementById('controlledName').textContent=playerLabel();
+  document.getElementById('possessionLabel').textContent=fieldEngine.side==='offense'?'YOUR OFFENSE':'YOUR DEFENSE';
+  drawField();
+}
+function completeLiveMatch(){
+  if(current===-1){
+    const won=gameState.home>gameState.away;
+    if(playoffRound>=3){show('champion');document.getElementById('champText').textContent=won?`${selected[0]} are Super Bowl champions! Final score ${gameState.home}-${gameState.away}.`:`${selected[0]} lost the Super Bowl ${gameState.home}-${gameState.away}. Start a new franchise to try again.`;return;}
+    show('dashboard');
+    if(won){document.getElementById('schedule').innerHTML+=`<div class="notice">You won the ${['Wild Card','Divisional','Conference Championship'][playoffRound]}!</div><button class="btn" onclick="startPlayoff(${playoffRound+1})">NEXT PLAYOFF ROUND →</button>`;}
+    else{document.getElementById('dashSub').textContent='Your playoff run has ended.';}
+  }else{legacyFinishMatch(true);}
+}
+function liveLoop(now){
+  requestAnimationFrame(liveLoop);
+  if(!fieldEngine||document.getElementById('match').classList.contains('hidden'))return;
+  const e=fieldEngine,s=gameState;
+  if(e.live&&!e.done){
+    const dt=1;
+    e.elapsed+=dt;
+    const up=keyState.ArrowUp||keyState.w||keyState.W,down=keyState.ArrowDown||keyState.s||keyState.S;
+    const left=keyState.ArrowLeft||keyState.a||keyState.A,right=keyState.ArrowRight||keyState.d||keyState.D;
+    const sprint=keyState.Shift;
+    if(e.side==='offense'){
+      const carrier=e.own[e.carrier];
+      if(e.control===e.carrier){carrier.x+=((right?1:0)-(left?1:0))*(sprint?3.7:2.35);carrier.y+=((down?1:0)-(up?1:0))*(sprint?3.2:2.1);}
+      else{const p=e.own[e.control];p.x+=((right?1:0)-(left?1:0))*2.1;p.y+=((down?1:0)-(up?1:0))*2.1;}
+      e.own.forEach((p,i)=>{if(receiverSlots.includes(i)&&i!==e.carrier){p.x=Math.min(880,p.x+1.0);p.y+=Math.sin((e.elapsed+i*20)/22)*.8;}});
+      e.opp.forEach((d,i)=>{const target=e.flight?e.flight.to:carrier;const dx=target.x-d.x,dy=target.y-d.y,len=Math.hypot(dx,dy)||1;d.x+=dx/len*d.speed;d.y+=dy/len*d.speed;});
+      if(e.flight){e.flight.t+=.035;if(e.flight.t>=1){const r=e.flight.to;const nearby=e.opp.some(d=>Math.hypot(d.x-r.x,d.y-r.y)<30);if(nearby&&Math.random()<.23){e.log='INTERCEPTED! The defense picked off the pass.';document.getElementById('log').textContent=e.log;s.poss=false;s.down=1;s.toGo=10;e.carrier=0;e.flight=null;endLivePlay('INTERCEPTION! The defense takes over.');}else{e.carrier=e.flight.targetIndex;e.control=e.carrier;e.log=`CAUGHT! ${r.role} #${r.n} has the ball.`;document.getElementById('log').textContent=e.log;document.getElementById('controlledName').textContent=playerLabel();}e.flight=null;}}
+      const tackle=e.opp.some(d=>Math.hypot(d.x-carrier.x,d.y-carrier.y)<17);
+      if(carrier.x>=900)endLivePlay('TOUCHDOWN!');
+      else if(tackle&&e.elapsed>40)endLivePlay('TACKLED!');
+      else if(e.elapsed>650)endLivePlay('The defense brings you down.');
+    }else{
+      const defender=e.own[e.control],runner=e.opp[e.carrier];
+      defender.x+=((right?1:0)-(left?1:0))*(sprint?3.6:2.2);defender.y+=((down?1:0)-(up?1:0))*(sprint?3.1:2.0);
+      // CPU ball carrier attempts to get around the user-controlled defender.
+      runner.x-=1.2;runner.y+=Math.sin(e.elapsed/24)*.8;
+      e.opp.slice(1).forEach((p)=>{p.x-=.35;p.y+=Math.sin((e.elapsed+p.n)/35)*.3;});
+      // Teammates hold their positions; the user must manually make every tackle.
+      if(runner.x<=100)endLivePlay('OPPONENT TOUCHDOWN!');
+      else if(e.elapsed>650)endLivePlay('Opponent runner stopped.');
+    }
+    if(e.dive){e.dive=false;}
+    e.own.forEach(p=>{p.x=clamp(p.x,65,935);p.y=clamp(p.y,58,442);});
+    e.opp.forEach(p=>{p.x=clamp(p.x,65,935);p.y=clamp(p.y,58,442);});
+  }
+  drawField();
+}
+function drawPlayer(p,color,controlled,hasBall){
+  // Stylized helmet, shoulder pads, jersey, arms and legs.
+  ctx.save();ctx.translate(p.x,p.y);
+  if(controlled){ctx.strokeStyle='#ffe56b';ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(0,2,19,17,0,0,Math.PI*2);ctx.stroke();}
+  ctx.strokeStyle='#101820';ctx.lineWidth=4;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(-5,10);ctx.lineTo(-8,18);ctx.moveTo(5,10);ctx.lineTo(8,18);ctx.stroke();
+  ctx.fillStyle=color;ctx.beginPath();ctx.ellipse(0,1,12,15,0,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle=color;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-8,-2);ctx.lineTo(-15,5);ctx.moveTo(8,-2);ctx.lineTo(15,5);ctx.stroke();
+  ctx.fillStyle='#f0c9a5';ctx.beginPath();ctx.arc(0,-13,7,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle='#111827';ctx.beginPath();ctx.arc(0,-15,8,Math.PI,Math.PI*2);ctx.fill();ctx.fillRect(5,-16,5,5);
+  ctx.fillStyle='#fff';ctx.font='bold 9px Arial';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(p.n,0,2);
+  if(hasBall){ctx.save();ctx.translate(16,2);ctx.rotate(-.55);ctx.fillStyle='#8b451e';ctx.beginPath();ctx.ellipse(0,0,7,4,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-2,-2);ctx.lineTo(-2,2);ctx.moveTo(1,-2);ctx.lineTo(1,2);ctx.stroke();ctx.restore();}
+  ctx.restore();
+}
+function drawField(){
+  if(!canvas||!ctx||!fieldEngine)return;
+  const w=1000,h=500,e=fieldEngine,s=gameState;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#17643e';ctx.fillRect(0,0,w,h);
+  for(let i=0;i<20;i++){ctx.fillStyle=i%2?'#1b7047':'#17643e';ctx.fillRect(100+i*40,42,40,416);}
+  // End zones and field boundary.
+  ctx.fillStyle='#173f78';ctx.fillRect(55,42,45,416);ctx.fillStyle='#a52e35';ctx.fillRect(900,42,45,416);
+  ctx.strokeStyle='#fff';ctx.lineWidth=4;ctx.strokeRect(55,42,890,416);
+  ctx.lineWidth=2;ctx.strokeRect(100,42,800,416);
+  ctx.fillStyle='#ffffff';ctx.font='900 22px Arial';ctx.textAlign='center';ctx.fillText(teamShort(),77,250);ctx.save();ctx.translate(923,250);ctx.rotate(Math.PI);ctx.fillText('OPP',0,0);ctx.restore();
+  for(let y=0;y<=100;y+=5){const x=100+y*8;ctx.strokeStyle='rgba(255,255,255,.83)';ctx.lineWidth=y%10===0?2.2:1;ctx.beginPath();ctx.moveTo(x,42);ctx.lineTo(x,458);ctx.stroke();
+    if(y%10===0&&y>0&&y<100){const num=y<=50?y:100-y;ctx.fillStyle='rgba(255,255,255,.92)';ctx.font='bold 21px Arial';ctx.textAlign='center';ctx.fillText(String(num),x-19,85);ctx.fillText(String(num),x+19,415);ctx.save();ctx.translate(x-19,85);ctx.rotate(Math.PI);ctx.fillText(String(num),0,0);ctx.restore();ctx.save();ctx.translate(x+19,415);ctx.rotate(Math.PI);ctx.fillText(String(num),0,0);ctx.restore();}}
+  for(let x=120;x<900;x+=8){ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=2;for(const y of [190,310]){ctx.beginPath();ctx.moveTo(x-2,y);ctx.lineTo(x+2,y);ctx.stroke();}}
+  // Goalposts at both ends.
+  ctx.strokeStyle='#f6cc43';ctx.lineWidth=7;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(75,250);ctx.lineTo(75,100);ctx.lineTo(115,100);ctx.moveTo(925,250);ctx.lineTo(925,100);ctx.lineTo(885,100);ctx.stroke();
+  // Line of scrimmage and first-down marker.
+  const scr=e.scrimmage;ctx.setLineDash([8,6]);ctx.strokeStyle='#55c9ff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(scr,46);ctx.lineTo(scr,454);ctx.stroke();ctx.setLineDash([]);
+  const marker=e.side==='offense'?Math.min(900,scr+s.toGo*8):Math.max(100,scr-s.toGo*8);ctx.strokeStyle='#ffe56b';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(marker,46);ctx.lineTo(marker,454);ctx.stroke();
+  // Players and ball in flight.
+  e.own.forEach((p,i)=>drawPlayer(p,e.ownColor,(e.side==='offense'?i===e.control:i===e.control),e.side==='offense'&&i===e.carrier&&!e.flight));
+  e.opp.forEach((p,i)=>drawPlayer(p,e.oppColor,false,e.side==='defense'&&i===e.carrier));
+  if(e.flight){const f=e.flight;const x=f.from.x+(f.to.x-f.from.x)*f.t,y=f.from.y+(f.to.y-f.from.y)*f.t-45*Math.sin(f.t*Math.PI);ctx.fillStyle='#8b451e';ctx.beginPath();ctx.ellipse(x,y,11,6,-.5,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x-3,y-2);ctx.lineTo(x-3,y+2);ctx.moveTo(x+1,y-2);ctx.lineTo(x+1,y+2);ctx.stroke();}
+  ctx.fillStyle='#fff';ctx.font='bold 12px Arial';ctx.textAlign='left';ctx.fillText(e.live?'LIVE PLAY':'READY FOR SNAP',70,28);
+  document.getElementById('possessionLabel').textContent=e.side==='offense'?'YOUR OFFENSE':'YOUR DEFENSE';
+  document.getElementById('targetLabel').textContent=`TARGET: ${e.target+1}`;
+}
+function updateGame(){
+  const s=gameState;if(!s)return;
+  document.getElementById('homeScore').textContent=s.home;document.getElementById('awayScore').textContent=s.away;
+  document.getElementById('quarter').textContent=s.quarter<=4?'Q'+s.quarter:'FINAL';
+  document.getElementById('clock').textContent=`${Math.floor(s.clock/60)}:${String(s.clock%60).padStart(2,'0')}`;
+  document.getElementById('down').textContent=`${ordinal(s.down)} & ${s.toGo}`;
+  const side=s.poss===false?'Opponent ball':'Your ball';
+  document.getElementById('situation').textContent=`${side} • Ball on the ${s.spot}-yard line • ${ordinal(s.down)} & ${s.toGo}`;
+}
+function openMatch(i){
+  current=i;const g=schedule[i];if(g.done){alert(`${g.result}: ${g.score} - ${g.against}`);return;}
+  gameState={home:0,away:0,quarter:1,clock:900,down:1,toGo:10,spot:25,poss:true,plays:0};
+  document.getElementById('matchTitle').textContent=`WEEK ${g.week} • GAME DAY`;
+  document.getElementById('matchInfo').textContent=`${selected[0]} vs ${g.opp[0]} • LIVE PLAYER CONTROL`;
+  document.getElementById('homeLabel').textContent=selected[1];document.getElementById('awayLabel').textContent=g.opp[1];
+  show('match');initLiveMatch();
+}
+function startPlayoff(round){
+  // entering a new playoff round retires the previous round's call-to-action
+  document.querySelectorAll('#schedule>.notice,#schedule>.btn').forEach(n=>n.remove());
+  playoffRound=round;current=-1;
+  const opponents=teams.filter(t=>t!==selected);const opp=opponents[(seedNum()*5+round*7+3)%31];playoffOpponentName=opp[0];
+  gameState={home:0,away:0,quarter:1,clock:900,down:1,toGo:10,spot:25,poss:true,plays:0};
+  document.getElementById('matchTitle').textContent=['WILD CARD','DIVISIONAL ROUND','CONFERENCE CHAMPIONSHIP','SUPER BOWL'][round];
+  document.getElementById('matchInfo').textContent=`${selected[0]} vs ${opp[0]} • WIN OR GO HOME`;
+  document.getElementById('homeLabel').textContent=selected[1];document.getElementById('awayLabel').textContent=opp[1];
+  document.getElementById('log').textContent=round===3?'THE SUPER BOWL. Play for the championship!':'Playoff football. Every snap matters.';
+  show('match');initLiveMatch();
+}
+function finishMatch(completed){if(current===-1){if(completed===false){gameState.home=0;gameState.away=Math.max(1,gameState.away);}completeLiveMatch();}else{legacyFinishMatch(completed);}}
+function keyHandler(ev,on){
+  if(document.getElementById('match').classList.contains('hidden'))return;
+  const k=ev.key;
+  if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' ','Shift','w','a','s','d','W','A','S','D','e','E','p','P','1','2','3','4'].includes(k))ev.preventDefault();
+  pressKey(k,on);
+  if(!on)return;
+  if(k==='e'||k==='E')switchPlayer();
+  if(k==='p'||k==='P')passBall();
+  if(k===' '&&fieldEngine&&fieldEngine.side==='defense')diveTackle();
+  if(['1','2','3','4'].includes(k))selectTarget(Number(k)-1);
+}
+window.addEventListener('keydown',e=>keyHandler(e,true));window.addEventListener('keyup',e=>keyHandler(e,false));
+window.pressKey=pressKey;window.snapPlay=snapPlay;window.passBall=passBall;window.switchPlayer=switchPlayer;window.diveTackle=diveTackle;window.specialTeams=specialTeams;window.selectTarget=selectTarget;
+
+// Clear live-game feedback: prominent play status, player labels and ball tracking.
+const liveFeedbackStyle=document.createElement('style');
+liveFeedbackStyle.textContent=`
+.field-live{position:relative;overflow:hidden}
+.field-overlay{z-index:2;font-size:12px;background:#061525b8;padding:8px 10px;border-radius:7px;top:9px}
+#situation{font-size:15px;font-weight:800;min-height:54px;display:flex;align-items:center}
+#log{min-height:150px;font-size:15px;font-weight:650;color:#fff}
+#controlledName{color:#ffe56b}
+`;
+document.head.appendChild(liveFeedbackStyle);
+const liveStatus=document.createElement('div');
+liveStatus.id='liveStatus';
+liveStatus.style.cssText='margin-top:10px;padding:12px 14px;border:1px solid #54718e;border-radius:9px;background:#071a2d;color:#fff;font-weight:800;letter-spacing:.4px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap';
+const sit=document.getElementById('situation');
+sit.insertAdjacentElement('afterend',liveStatus);
+const originalDrawField=drawField;
+drawField=function(){
+  originalDrawField();
+  if(!fieldEngine||!gameState)return;
+  const e=fieldEngine,s=gameState;
+  const controlled=(e.own[e.control]||e.own[0]);
+  const carrier=(e.side==='offense'?e.own:e.opp)[e.carrier];
+  const phase=e.live?'🔴 LIVE PLAY — PLAYERS ARE MOVING':'🟢 READY — PRESS SNAP / HIKE';
+  const possession=e.side==='offense'?'YOUR TEAM HAS THE BALL':'OPPONENT HAS THE BALL';
+  liveStatus.innerHTML=`<span>${phase}</span><span>${possession}</span><span>CONTROL: ${controlled.role} #${controlled.n}</span><span>BALL: ${Math.round((e.side==='offense'?carrier.x:1000-carrier.x)/8)} yd line</span>`;
+};
+const oldEndLivePlay=endLivePlay;
+endLivePlay=function(message){
+  if(fieldEngine&&message){
+    const log=document.getElementById('log');
+    log.textContent=message;
+    document.getElementById('situation').textContent=message;
+  }
+  oldEndLivePlay(message);
+  drawField();
+};
+const oldSnapPlay=snapPlay;
+snapPlay=function(){oldSnapPlay();drawField();};
+const oldSwitchPlayer=switchPlayer;
+switchPlayer=function(){oldSwitchPlayer();drawField();};
+const oldPassBall=passBall;
+passBall=function(){oldPassBall();drawField();};
+const oldSelectTarget=selectTarget;
+selectTarget=function(n){oldSelectTarget(n);drawField();};
+// Keep the visible status fresh throughout every animation frame.
+const priorLiveLoop=liveLoop;
+liveLoop=function(now){priorLiveLoop(now);if(!document.getElementById('match').classList.contains('hidden'))drawField();};
+</script>
+<style>
+.game-layout{grid-template-columns:minmax(0,1fr) 215px;gap:16px;align-items:stretch}
+.field-live{height:clamp(320px,38vw,500px);aspect-ratio:auto;min-height:320px}
+#fieldCanvas{display:block;width:100%;height:100%;aspect-ratio:auto}
+.controller{display:block;margin-top:14px;padding:0;border:0;background:none}
+.controller-left{display:none}
+.controller-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.controller-actions .btn{min-height:64px;font-size:16px;padding:14px}
+.stack{align-content:start;gap:14px}
+#goFartherBtn,#callCloserBtn{width:100%;min-height:78px;white-space:normal;line-height:1.4}
+#callCloserBtn{margin-top:10px}
+@media(max-width:800px){.game-layout{grid-template-columns:1fr}.field-live{height:clamp(280px,65vw,420px)}.controller-actions{grid-template-columns:repeat(3,minmax(0,1fr))}.controller-actions .btn{font-size:12px;padding:10px 5px}}
+</style>
+<script>
+(function(){
+const controllerActions=document.querySelector('.controller-actions');
+if(controllerActions){controllerActions.innerHTML=`
+<button class="btn" id="snapBtn" onclick="runCommand()">🏃 RUN</button>
+<button class="btn secondary" onclick="passBall()">🎯 PASS</button>
+<button class="btn secondary" onclick="diveTackle()">🛡 TACKLE</button>`;}
+const side=document.querySelector('#match .game-layout .stack');
+if(side){
+ const far=document.createElement('button');far.className='btn secondary';far.id='goFartherBtn';far.textContent='🏃 PLAYER GO FARTHER';far.onclick=sendPlayersFarther;
+ const closer=document.createElement('button');closer.className='btn ghost';closer.id='callCloserBtn';closer.textContent='↩ CALL A PLAYER TO COME CLOSER';closer.onclick=callPlayerCloser;
+ const heading=side.querySelector('h3');if(heading)heading.insertAdjacentElement('afterend',far);
+ const description=side.querySelector('.muted');if(description)description.insertAdjacentElement('afterend',closer);
+}
+const previousInit=initLiveMatch;
+initLiveMatch=function(){previousInit();const button=document.getElementById('snapBtn');if(button)button.textContent='🏃 RUN';};
+window.runCommand=runCommand;window.sendPlayersFarther=sendPlayersFarther;window.callPlayerCloser=callPlayerCloser;
+function runCommand(){
+ const e=fieldEngine;if(!e)return;if(!e.live&&!e.done)snapPlay();if(!e.live)return;
+ if(e.side==='offense'&&e.control!==e.carrier){e.control=e.carrier;document.getElementById('controlledName').textContent=playerLabel();}
+ const direction=e.side==='offense'?'d':'a';keyState[direction]=true;keyState.Shift=true;
+ setTimeout(()=>{keyState[direction]=false;keyState.Shift=false;},1150);
+ e.log=e.side==='offense'?'RUN! Ball carrier accelerates downfield.':'Pursue the ball carrier!';document.getElementById('log').textContent=e.log;
+}
+function sendPlayersFarther(){
+ const e=fieldEngine;if(!e||e.side!=='offense')return;
+ receiverSlots.forEach((slot,i)=>{const p=e.own[slot];if(p){p.x=clamp(p.x+95,100,880);p.y=clamp(p.y+(i%2===0?-24:24),65,435);}});
+ e.log='Receivers are spreading out and running farther downfield.';document.getElementById('log').textContent=e.log;drawField();
+}
+function callPlayerCloser(){
+ const e=fieldEngine;if(!e||e.side!=='offense')return;
+ const carrier=e.own[e.carrier],slot=receiverSlots[e.target],p=e.own[slot];
+ if(p){p.x=clamp(carrier.x+48,75,890);p.y=clamp(carrier.y+(e.target%2===0?-38:38),65,435);}
+ e.log=`${p?p.role+' #'+p.n:'A teammate'} is coming closer to the ball.`;document.getElementById('log').textContent=e.log;drawField();
+}
+})();
+</script>
+<script>
+// Computer possessions: whenever the opponent has the ball, it automatically
+// hikes the next play while the user controls the defense.
+(function(){
+  const originalMakeFormation=makeFormation;
+  let cpuTimer=null;
+  function queueComputerPlay(){
+    if(cpuTimer)clearTimeout(cpuTimer);
+    cpuTimer=setTimeout(()=>{
+      cpuTimer=null;
+      if(!gameState||!fieldEngine||document.getElementById('match').classList.contains('hidden'))return;
+      if(fieldEngine.side==='defense'&&!fieldEngine.live&&!fieldEngine.done)snapPlay();
+    },850);
+  }
+  makeFormation=function(){
+    originalMakeFormation();
+    if(fieldEngine&&fieldEngine.side==='defense')queueComputerPlay();
+  };
+  const originalEndLivePlay=endLivePlay;
+  endLivePlay=function(message){
+    if(!fieldEngine||!gameState)return originalEndLivePlay(message);
+    const beforeHome=gameState.home,beforeAway=gameState.away;
+    const make=makeFormation;
+    makeFormation=function(){
+      // A touchdown is six points plus the game's automatic successful PAT.
+      if(gameState.home>beforeHome)gameState.poss=false;
+      if(gameState.away>beforeAway)gameState.poss=true;
+      make();
+      makeFormation=make;
+    };
+    originalEndLivePlay(message);
+    makeFormation=make;
+    if(fieldEngine.side==='defense'&&!fieldEngine.live&&!fieldEngine.done)queueComputerPlay();
+  };
+  // Four quarters of 15 minutes. Each completed play uses an approximate
+  // 30-second game-clock run-off; the clock no longer ends after 20 snaps.
+  advanceClock=function(){
+    const s=gameState;if(!s)return;
+    s.plays=(s.plays||0)+1;
+    s.clock=Math.max(0,s.clock-30);
+    if(s.clock===0){
+      if(s.quarter<4){s.quarter++;s.clock=900;}
+      else{updateGame();completeLiveMatch();return;}
+    }
+    updateGame();
+  };
+  // Punts and field-goal attempts are fourth-down decisions.
+  const originalSpecialTeams=specialTeams;
+  specialTeams=function(type){
+    if(gameState&&gameState.down!==4){
+      document.getElementById('log').textContent='NFL RULE: Field goals and punts are normally fourth-down decisions. Keep playing this series.';
+      return;
+    }
+    originalSpecialTeams(type);
+  };
+})();
+</script>
+<style>
+.controller-actions{grid-template-columns:minmax(230px,1.25fr) 1fr 1fr;align-items:center}
+.run-with-stick{display:flex;align-items:center;gap:12px;min-width:0;height:100%}
+.run-with-stick .btn{flex:1;min-height:88px}
+.run-joystick{position:relative;flex:0 0 100px;width:100px;height:100px;border:2px solid #6c89a6;border-radius:50%;background:radial-gradient(circle at 35% 30%,#395c7e,#102943 72%);box-shadow:inset 0 3px 12px #0008,0 4px 12px #0005;touch-action:none;user-select:none}
+.run-joystick-knob{position:absolute;left:50%;top:50%;width:43px;height:43px;border-radius:50%;transform:translate(-50%,-50%);background:linear-gradient(145deg,#d8e5f2,#718ba7);border:2px solid #edf5ff;box-shadow:0 3px 8px #0009;pointer-events:none}
+.replay-overlay{position:absolute;inset:0;z-index:8;display:none;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 14px 14px;border-radius:12px;background:linear-gradient(180deg,#061525b8,transparent 38%,#06152530 68%,#061525c9);pointer-events:none}
+.replay-heading{padding:9px 16px;border:1px solid #b9d4ed88;border-radius:9px;background:#07182bdc;text-align:center;font-weight:900;letter-spacing:1.4px;text-shadow:0 2px 5px #000}
+.replay-heading small{display:block;margin-top:4px;color:#c5d6e8;font-size:10px;letter-spacing:2px}
+.replay-overlay .btn{pointer-events:auto;min-width:190px;min-height:48px}
+@media(max-width:800px){.controller-actions{grid-template-columns:minmax(185px,1.2fr) 1fr 1fr;gap:7px}.run-with-stick{gap:7px}.run-joystick{width:78px;height:78px;flex-basis:78px}.run-joystick-knob{width:36px;height:36px}.run-with-stick .btn{min-height:78px;padding:10px 7px;font-size:13px}}
+</style>
+<script>
+(function(){
+  const actions=document.querySelector('.controller-actions');
+  if(!actions)return;
+  actions.innerHTML=`
+    <div class="run-with-stick">
+      <div class="run-joystick" id="runJoystick" role="application" aria-label="Running direction joystick"><div class="run-joystick-knob" id="runJoystickKnob"></div></div>
+      <button class="btn" id="snapBtn" onclick="runCommand()">🏃 RUN</button>
+    </div>
+    <button class="btn secondary" onclick="passBall()">🎯 PASS</button>
+    <button class="btn secondary" onclick="diveTackle()">🛡 TACKLE</button>
+    <button class="btn ghost" onclick="specialTeams('kick')">🥅 FIELD GOAL</button>
+    <button class="btn ghost" onclick="specialTeams('punt')">🏈 PUNT</button>`;
+
+  const stick=document.getElementById('runJoystick');
+  const knob=document.getElementById('runJoystickKnob');
+  let pointer=null;
+  function clearStick(){
+    pointer=null;
+    ['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].forEach(k=>keyState[k]=false);
+    knob.style.left='50%';knob.style.top='50%';
+  }
+  function moveStick(ev){
+    if(pointer!==ev.pointerId)return;
+    const r=stick.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height/2;
+    let dx=ev.clientX-cx,dy=ev.clientY-cy;
+    const max=r.width*.29,len=Math.hypot(dx,dy)||1;
+    if(len>max){dx=dx/len*max;dy=dy/len*max;}
+    knob.style.left=`calc(50% + ${dx}px)`;knob.style.top=`calc(50% + ${dy}px)`;
+    const nx=dx/max,ny=dy/max,dead=.2;
+    keyState.ArrowLeft=nx< -dead;keyState.ArrowRight=nx>dead;
+    keyState.ArrowUp=ny< -dead;keyState.ArrowDown=ny>dead;
+  }
+  stick.addEventListener('pointerdown',ev=>{ev.preventDefault();pointer=ev.pointerId;stick.setPointerCapture(pointer);moveStick(ev);});
+  stick.addEventListener('pointermove',moveStick);
+  stick.addEventListener('pointerup',clearStick);
+  stick.addEventListener('pointercancel',clearStick);
+  stick.addEventListener('lostpointercapture',clearStick);
+
+  window.runCommand=function(){
+    const e=fieldEngine;if(!e||replayActive)return;
+    if(!e.live&&!e.done)snapPlay();
+    if(!e.live)return;
+    if(e.side==='offense'&&e.control!==e.carrier){e.control=e.carrier;document.getElementById('controlledName').textContent=playerLabel();}
+    keyState.Shift=true;setTimeout(()=>keyState.Shift=false,900);
+    e.log=e.side==='offense'?'RUN! Use the joystick to steer the ball carrier.':'Pursue the ball carrier! Use the joystick to steer your defender.';
+    document.getElementById('log').textContent=e.log;
+  };
+
+  const field=document.querySelector('.field-live');
+  const overlay=document.createElement('div');
+  overlay.className='replay-overlay';overlay.id='replayOverlay';
+  overlay.innerHTML='<div class="replay-heading" id="replayHeading">TOUCHDOWN REPLAY 1 OF 2<small>FOUR-SECOND REPLAY</small></div><button class="btn" id="skipReplay">⏭ SKIP REPLAY</button>';
+  field.appendChild(overlay);
+
+  let replayActive=false,replayFrames=[],replayStarted=0,replayPass=-1;
+  let history=[];
+  function frameCopy(){
+    if(!fieldEngine)return null;
+    const e=fieldEngine;
+    const flight=e.flight?{from:{...e.flight.from},to:{x:e.flight.to.x,y:e.flight.to.y},t:e.flight.t,targetIndex:e.flight.targetIndex}:null;
+    return {engine:{...e,own:e.own.map(p=>({...p})),opp:e.opp.map(p=>({...p})),flight},state:gameState?{...gameState}:null};
+  }
+  function stopReplay(){
+    replayActive=false;overlay.style.display='none';replayFrames=[];history=[];
+    if(fieldEngine)drawField();
+    if(fieldEngine&&fieldEngine.side==='defense'&&!fieldEngine.live&&!fieldEngine.done){setTimeout(()=>{if(!replayActive&&fieldEngine&&fieldEngine.side==='defense'&&!fieldEngine.live)snapPlay();},250);}
+  }
+  document.getElementById('skipReplay').addEventListener('click',stopReplay);
+  function beginReplay(frames){
+    if(!frames.length&&fieldEngine){const f=frameCopy();if(f)frames.push(f);}
+    if(frames.length===1)frames.push(frames[0]);
+    replayFrames=frames;replayStarted=performance.now();replayPass=-1;replayActive=true;
+    overlay.style.display='flex';
+  }
+  function renderReplay(now){
+    const elapsed=now-replayStarted;
+    if(elapsed>=8000){stopReplay();return;}
+    const pass=Math.floor(elapsed/4000),within=(elapsed-pass*4000)/4000;
+    if(pass!==replayPass){replayPass=pass;document.getElementById('replayHeading').innerHTML=`TOUCHDOWN REPLAY ${pass+1} OF 2<small>FOUR-SECOND REPLAY · ANGLE ${pass+1}</small>`;}
+    const index=Math.min(replayFrames.length-1,Math.floor(within*(replayFrames.length-1)));
+    const savedEngine=fieldEngine,savedState=gameState,shot=replayFrames[index];
+    fieldEngine=shot.engine;gameState=shot.state||savedState;drawField();
+    fieldEngine=savedEngine;gameState=savedState;
+  }
+  const previousSnap=snapPlay;
+  snapPlay=function(){if(replayActive)return;history=[];previousSnap();};
+  const previousEnd=endLivePlay;
+  endLivePlay=function(message){
+    const isTouchdown=/touchdown/i.test(String(message||''));
+    const frames=isTouchdown?history.slice():[];
+    if(isTouchdown){const finalFrame=frameCopy();if(finalFrame)frames.push(finalFrame);}
+    previousEnd(message);
+    if(isTouchdown)beginReplay(frames);
+  };
+  const previousLoop=liveLoop;
+  liveLoop=function(now){
+    if(replayActive){renderReplay(now);requestAnimationFrame(liveLoop);return;}
+    if(fieldEngine&&fieldEngine.live){const f=frameCopy();if(f){history.push(f);if(history.length>480)history.shift();}}
+    previousLoop(now);
+  };
+})();
+</script>
+<style>
+/* Higher, slightly elevated stadium camera for the live field. */
+.field-live{
+  background-color:#14283a;
+  background-image:
+    radial-gradient(ellipse at 50% 42%,rgba(91,125,151,.5),transparent 62%),
+    repeating-radial-gradient(circle at 12px 10px,rgba(226,235,242,.72) 0 1.3px,rgba(53,75,96,.9) 1.5px 4px,transparent 4.5px 8px),
+    linear-gradient(180deg,#243e57,#0c1b2b);
+  padding:8px;
+  box-shadow:inset 0 0 28px #0009,0 14px 30px #0008;
+}
+#fieldCanvas{
+  width:100%;
+  transform:perspective(1450px) rotateX(13deg) scale(1.015);
+  transform-origin:center 52%;
+  box-shadow:0 15px 22px #0009;
+  outline:1px solid rgba(255,255,255,.25);
+}
+.field-overlay{z-index:3}
+@media(max-width:800px){
+  .field-live{padding:5px}
+  #fieldCanvas{transform:perspective(1100px) rotateX(10deg) scale(1.01)}
+}
+</style>
+<style>
+/* Compact touch controls stay attached to the bottom edge of the field. */
+.field-live{position:relative;overflow:hidden;padding-bottom:0}
+.field-live>.controller{position:absolute;z-index:6;left:10px;right:10px;bottom:9px;margin:0;padding:7px;background:rgba(5,17,30,.82);border:1px solid rgba(190,215,238,.35);border-radius:10px;backdrop-filter:blur(5px)}
+.field-live>.controller .controller-actions{display:grid;grid-template-columns:minmax(0,1.15fr) 1fr 1fr;gap:7px;align-items:center}
+.field-live>.controller .run-with-stick{gap:7px}
+.field-live>.controller .run-joystick{width:54px;height:54px;flex-basis:54px}
+.field-live>.controller .run-joystick-knob{width:27px;height:27px}
+.field-live>.controller .run-with-stick .btn,.field-live>.controller .controller-actions>.btn{min-height:40px;height:40px;padding:7px 6px;font-size:11px;line-height:1.1;white-space:nowrap}
+@media(max-width:800px){
+  .field-live>.controller{left:6px;right:6px;bottom:6px;padding:5px}
+  .field-live>.controller .controller-actions{grid-template-columns:minmax(0,1.1fr) 1fr 1fr;gap:5px}
+  .field-live>.controller .run-joystick{width:44px;height:44px;flex-basis:44px}
+  .field-live>.controller .run-joystick-knob{width:23px;height:23px}
+  .field-live>.controller .run-with-stick .btn,.field-live>.controller .controller-actions>.btn{min-height:36px;height:36px;padding:5px 3px;font-size:10px}
+}
+</style>
+<script>
+(()=>{const field=document.querySelector('#match .field-live');const controls=document.querySelector('#match .controller');if(field&&controls)field.appendChild(controls);})();
+</script>
+<script>
+// Real Humans control always follows the teammate who currently has the ball.
+(function(){
+  const previousLoop=liveLoop;
+  liveLoop=function(now){
+    const e=fieldEngine;
+    if(e&&e.side==='offense'&&e.own&&e.own[e.carrier]){
+      e.control=e.carrier;
+      const label=document.getElementById('controlledName');
+      if(label)label.textContent=playerLabel();
+    }
+    previousLoop(now);
+  };
+  const previousSwitch=switchPlayer;
+  switchPlayer=function(){
+    const e=fieldEngine;
+    if(e&&e.side==='offense'){
+      e.control=e.carrier;
+      const label=document.getElementById('controlledName');
+      if(label)label.textContent=playerLabel();
+      const log=document.getElementById('log');
+      if(log)log.textContent='You automatically control the Real Humans player carrying the ball.';
+      drawField();
+      return;
+    }
+    previousSwitch();
+  };
+})();
+</script>
+<script>
+// Crossing midfield earns a fresh set of four downs when the runner is tackled.
+(function(){
+  const previousEndLivePlay=endLivePlay;
+  endLivePlay=function(message){
+    const e=fieldEngine,s=gameState;
+    if(e&&s&&e.live&&!e.done){
+      const offense=e.side==='offense';
+      const runner=(offense?e.own:e.opp)[e.carrier];
+      const crossedMidfield=runner&&(offense?(e.scrimmage<500&&runner.x>=500):(e.scrimmage>500&&runner.x<=500));
+      if(crossedMidfield&&!e.midfieldBonusUsed){
+        e.midfieldBonusUsed=true;
+        const gain=offense?Math.round((runner.x-e.scrimmage)/8):Math.round((e.scrimmage-runner.x)/8);
+        if(gain>=0)s.toGo=Math.min(s.toGo,gain);
+      }
+    }
+    previousEndLivePlay(message);
+  };
+})();
+</script>
+<style>
+.title-screen{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;padding:24px;text-align:center;background:radial-gradient(ellipse at 50% 38%,#1d4772 0%,#0b2039 48%,#040c18 100%)}
+.title-screen:before,.title-screen:after{content:'🏈';position:absolute;font-size:clamp(90px,18vw,220px);opacity:.09;pointer-events:none;filter:drop-shadow(0 12px 20px #000)}
+.title-screen:before{left:5%;top:12%;transform:rotate(-28deg)}.title-screen:after{right:5%;bottom:10%;transform:rotate(28deg)}
+.title-content{position:relative;z-index:1;display:grid;justify-items:center;gap:25px}
+.title-wordmark{font:clamp(64px,13vw,150px)/.85 Impact,'Arial Narrow',sans-serif;letter-spacing:3px;color:#fff;text-shadow:0 8px 0 #071426,0 16px 35px #0009}
+.title-wordmark span{color:#f05a31}
+.title-enter{border:2px solid #ff946f;border-radius:12px;padding:17px 38px;background:linear-gradient(180deg,#f36a3e,#c93d20);color:#fff;font:900 18px Arial,sans-serif;letter-spacing:2px;cursor:pointer;box-shadow:0 8px 0 #7c2818,0 14px 28px #0008;transition:transform .15s,filter .15s}
+.title-enter:hover{filter:brightness(1.13);transform:translateY(-2px)}.title-enter:active{transform:translateY(5px);box-shadow:0 3px 0 #7c2818,0 8px 18px #0008}
+.title-caption{color:#b9cce0;font-size:12px;letter-spacing:4px;font-weight:800}
+</style>
+<section id="titleScreen" class="title-screen" aria-label="Touchdown title screen"><div class="title-content"><div class="title-wordmark">TOUCH<span>DOWN</span></div><div class="title-caption">THE FOOTBALL FRANCHISE EXPERIENCE</div><button class="title-enter" onclick="document.getElementById('titleScreen').classList.add('hidden')">TOUCHDOWN</button></div></section>
+<style>
+.pause-overlay{position:absolute;inset:0;z-index:9;display:none;align-items:center;justify-content:center;flex-direction:column;gap:12px;background:rgba(3,10,20,.82);color:#fff;text-align:center;backdrop-filter:blur(5px)}
+.pause-overlay strong{font:clamp(34px,6vw,64px) Impact,'Arial Narrow',sans-serif;letter-spacing:3px;color:#ffe56b;text-shadow:0 4px 16px #000}
+.pause-overlay span{font-size:12px;font-weight:800;letter-spacing:2px;color:#d5e2ef}
+#pauseGameBtn{width:100%;min-height:48px;font-weight:900;letter-spacing:1px}
+</style>
+<script>
+(function(){
+  const match=document.getElementById('match');
+  const field=match&&match.querySelector('.field-live');
+  const side=match&&match.querySelector('.game-layout .stack');
+  if(!field||!side)return;
+  let paused=false;
+  const button=document.createElement('button');
+  button.type='button';button.id='pauseGameBtn';button.className='btn secondary';button.textContent='Ⅱ PAUSE GAME';
+  const forfeit=side.querySelector('button[onclick="finishMatch(false)"]');
+  if(forfeit)side.insertBefore(button,forfeit);else side.appendChild(button);
+  const overlay=document.createElement('div');
+  overlay.className='pause-overlay';overlay.innerHTML='<strong>GAME PAUSED</strong><span>PRESS RESUME GAME TO CONTINUE</span>';
+  field.appendChild(overlay);
+  button.addEventListener('click',function(){
+    if(!fieldEngine||match.classList.contains('hidden'))return;
+    const replay=document.getElementById('replayOverlay');
+    if(replay&&replay.style.display==='flex'){
+      document.getElementById('log').textContent='The game cannot be paused during a touchdown replay.';
+      return;
+    }
+    paused=!paused;
+    if(paused){
+      Object.keys(keyState).forEach(k=>keyState[k]=false);
+      overlay.style.display='flex';button.textContent='▶ RESUME GAME';
+      button.setAttribute('aria-label','Resume game');
+    }else{
+      overlay.style.display='none';button.textContent='Ⅱ PAUSE GAME';
+      button.setAttribute('aria-label','Pause game');
+    }
+  });
+  const previousLoop=liveLoop;
+  liveLoop=function(now){
+    if(paused){requestAnimationFrame(liveLoop);return;}
+    previousLoop(now);
+  };
+  const previousSnap=snapPlay;snapPlay=function(){if(!paused)previousSnap();};window.snapPlay=snapPlay;
+  const previousPass=passBall;passBall=function(){if(!paused)previousPass();};window.passBall=passBall;
+  const previousTackle=diveTackle;diveTackle=function(){if(!paused)previousTackle();};window.diveTackle=diveTackle;
+  const previousRun=window.runCommand;window.runCommand=function(){if(!paused&&previousRun)previousRun();};
+})();
+</script>
+<style>
+.field-live>.controller .controller-actions{grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,.8fr))}
+.field-live>.controller #switchPlayersBtn:disabled{opacity:.38;filter:grayscale(1);cursor:not-allowed}
+@media(max-width:800px){.field-live>.controller .controller-actions{grid-template-columns:minmax(0,1.1fr) repeat(3,minmax(0,.8fr))}.field-live>.controller #switchPlayersBtn{white-space:normal;font-size:9px}}
+</style>
+<script>
+(function(){
+  const actions=document.querySelector('#match .controller-actions');
+  if(!actions)return;
+  const button=document.createElement('button');
+  button.type='button';button.id='switchPlayersBtn';button.className='btn secondary';
+  button.textContent='🔁 SWITCH PLAYERS';
+  button.title='Available only when the opponent has possession';
+  actions.appendChild(button);
+  function refreshSwitchButton(){
+    const e=fieldEngine;
+    button.disabled=!e||e.side!=='defense';
+    button.setAttribute('aria-disabled',String(button.disabled));
+    button.title=button.disabled?'You can switch players only while defending.':'Switch to another defender.';
+  }
+  button.addEventListener('click',function(){
+    if(button.disabled)return;
+    switchPlayer();
+    refreshSwitchButton();
+  });
+  const previousSwitch=switchPlayer;
+  switchPlayer=function(){
+    const e=fieldEngine;
+    if(!e||e.side!=='defense'){
+      const log=document.getElementById('log');
+      if(log)log.textContent='You can switch players only when the opponent has possession.';
+      refreshSwitchButton();
+      return;
+    }
+    previousSwitch();
+    refreshSwitchButton();
+  };
+  window.switchPlayer=switchPlayer;
+  const previousDraw=drawField;
+  drawField=function(){previousDraw();refreshSwitchButton();};
+  refreshSwitchButton();
+})();
+</script>
+<script>
+// Give the computer a real drop-back and pass before the user defense pursues.
+(function(){
+  const priorFormation=makeFormation;
+  makeFormation=function(){
+    const previousBonusUsed=fieldEngine&&fieldEngine.midfieldBonusUsed;
+    const previousBonusPoss=fieldEngine&&fieldEngine.midfieldBonusPoss;
+    priorFormation();
+    const e=fieldEngine,s=gameState;
+    if(!e||!s)return;
+    e.midfieldBonusPoss=s.poss;
+    e.midfieldBonusUsed=previousBonusPoss===s.poss&&!!previousBonusUsed;
+    if(s.poss!==false)return;
+    const cpuLine=1000-(100+s.spot*8);
+    const defenseOffsets=[-350,-310,-310,-310,-270,-270,-240,-240,-210,-180,-160];
+    const defenseY=[250,205,295,165,335,250,130,370,95,405,250];
+    e.own.forEach((p,i)=>{p.x=clamp(cpuLine+defenseOffsets[i],65,935);p.y=defenseY[i];});
+    const offenseOffsets=[0,-30,-35,-35,-40,-40,-65,-65,-100,-110,-110];
+    const offenseY=[250,250,215,285,180,320,205,295,150,95,405];
+    e.opp.forEach((p,i)=>{p.x=clamp(cpuLine+offenseOffsets[i],65,935);p.y=offenseY[i];});
+    e.carrier=0;e.control=5;e.side='defense';e.scrimmage=e.opp[0].x;
+    e.cpuPassStage='ready';e.cpuPassTimer=0;e.cpuTarget=6;e.flight=null;
+  };
+
+  const priorSnap=snapPlay;
+  snapPlay=function(){
+    const e=fieldEngine;
+    priorSnap();
+    if(e&&e.side==='defense'&&e.live){
+      e.cpuPassStage='dropback';e.cpuPassTimer=52;e.cpuTarget=6;e.flight=null;
+      e.log='COMPUTER QB #8 takes the snap and drops back to pass.';
+      document.getElementById('log').textContent=e.log;
+      drawField();
+    }
+  };
+
+  const priorLoop=liveLoop;
+  liveLoop=function(now){
+    const e=fieldEngine;
+    if(e&&e.live&&e.side==='defense'&&(e.cpuPassStage==='dropback'||e.cpuPassStage==='flight')){
+      e.elapsed+=1;
+      const qb=e.opp[0],receiver=e.opp[e.cpuTarget];
+      if(e.cpuPassStage==='dropback'){
+        qb.x=Math.min(850,qb.x+.28);
+        receiver.x=Math.max(100,receiver.x-.1);
+        receiver.y+=Math.sin(e.elapsed/13)*.22;
+        e.cpuPassTimer--;
+        if(e.cpuPassTimer<=0){
+          e.flight={from:{x:qb.x,y:qb.y},to:{x:receiver.x,y:receiver.y},t:0,targetIndex:e.cpuTarget,cpu:true};
+          e.cpuPassStage='flight';
+          e.log='THE COMPUTER QUARTERBACK THROWS! Your defense is ready to chase the receiver.';
+          document.getElementById('log').textContent=e.log;
+        }
+      }else if(e.flight){
+        e.flight.t+=.045;
+        if(e.flight.t>=1){
+          e.carrier=e.cpuTarget;e.cpuPassStage='run';e.flight=null;
+          e.log=`PASS COMPLETE! The computer receiver #${receiver.n} has the ball. Chase and tackle!`;
+          document.getElementById('log').textContent=e.log;
+          document.getElementById('controlledName').textContent=playerLabel();
+        }
+      }
+      // Keep both teams set during the drop-back and throw; pursuit starts on the catch.
+      const wasLive=e.live;e.live=false;priorLoop(now);e.live=wasLive;
+      drawField();
+      return;
+    }
+    priorLoop(now);
+  };
+})();
+</script>
+</body></html>

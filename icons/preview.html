@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Touchdown — icon preview</title>
+<link rel="icon" href="favicon.ico">
+<style>
+  :root{color-scheme:dark}
+  body{margin:0;padding:32px;font:15px/1.5 Inter,system-ui,Arial,sans-serif;background:#0b1220;color:#e8eef7}
+  h1{font:700 22px/1.2 Impact,'Arial Narrow',sans-serif;letter-spacing:1px;margin:0 0 4px}
+  h2{font:600 13px/1 system-ui;letter-spacing:1.5px;text-transform:uppercase;color:#8fa4bd;margin:36px 0 14px}
+  p.note{color:#8fa4bd;margin:0}
+  .row{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-end}
+  .cell{text-align:center;font-size:11px;color:#93a7bf}
+  .cell img{display:block;margin:0 auto 8px;border-radius:22%}
+  .tiles{display:flex;flex-wrap:wrap;gap:26px}
+  .home{width:220px}
+  .home .screen{background:radial-gradient(circle at 30% 20%,#28476f,#0d1b2c 70%);border-radius:26px;padding:22px 16px;display:grid;justify-items:center;gap:10px;box-shadow:0 18px 40px #0007,inset 0 0 0 1px #ffffff14}
+  .home img{width:96px;height:96px;border-radius:24px;box-shadow:0 10px 22px #000a,0 1px 0 #ffffff2e inset}
+  .home span{font-size:12px;color:#dfe9f6}
+  .light{background:#eef2f8;border-radius:22px;padding:26px;display:flex;gap:20px;align-items:flex-end;box-shadow:inset 0 0 0 1px #c9d4e3}
+  .light .cell{color:#5b6b80}
+  .circle{width:150px;height:150px;border-radius:50%;overflow:hidden;box-shadow:0 8px 20px #0008}
+  .circle img{width:100%;height:100%;display:block}
+  .topbar{display:flex;align-items:center;gap:10px;background:#111d2f;border-radius:10px 10px 0 0;padding:8px 12px;font-size:12px;color:#c7d6e8}
+  .topbar img{width:16px;height:16px;border-radius:4px}
+  .tabs{display:flex;gap:8px;margin-left:auto;color:#7d90a8}
+  .tabs b{background:#1d2e46;border-radius:5px 5px 0 0;padding:4px 10px;color:#e8eef7}
+  footer{margin-top:40px;color:#6d8099;font-size:12px}
+</style></head><body>
+<h1>TOUCHDOWN — APP ICON</h1>
+<p class="note">Navy field, burnt-orange football, motion streaks. Generated from the game's own palette (#102c52 / #f05a31).</p>
+
+<h2>Home screen</h2>
+<div class="tiles">
+  <div class="home"><div class="screen"><img src="icon-192.png" alt="Touchdown app icon"><span>Touchdown</span></div></div>
+  <div class="home"><div class="screen"><img src="icon-180.png" alt="Touchdown app icon"><span>Touchdown</span></div></div>
+</div>
+
+<h2>Sizes</h2>
+<div class="row">
+  <div class="cell"><img src="icon-512.png" width="160" height="160" alt="512">512</div>
+  <div class="cell"><img src="icon-192.png" width="96" height="96" alt="192">192</div>
+  <div class="cell"><img src="icon-128.png" width="64" height="64" alt="128">128</div>
+  <div class="cell"><img src="icon-64.png" width="48" height="48" alt="64">64</div>
+  <div class="cell"><img src="icon-48.png" width="48" height="48" alt="48">48</div>
+  <div class="cell"><img src="icon-32.png" width="32" height="32" alt="32">32</div>
+  <div class="cell"><img src="favicon.ico" width="16" height="16" alt="16">16 (ico)</div>
+</div>
+
+<h2>On light backgrounds</h2>
+<div class="light">
+  <div class="cell"><img src="icon-192.png" width="88" height="88" alt="">88</div>
+  <div class="cell"><img src="icon-64.png" width="48" height="48" alt="">48</div>
+  <div class="cell"><img src="icon-32.png" width="32" height="32" alt="">32</div>
+</div>
+
+<h2>Maskable (Android adaptive)</h2>
+<div class="row">
+  <div class="cell"><div class="circle"><img src="icon-maskable-512.png" alt="maskable circle crop"></div>circle crop</div>
+  <div class="cell"><img src="icon-maskable-512.png" width="128" height="128" alt="maskable">full-bleed 512</div>
+</div>
+
+<h2>Browser tab</h2>
+<div style="width:min(520px,100%)"><div class="topbar"><img src="icon-32.png" alt="">Touchdown<span class="tabs"><b>Touchdown</b><span>New tab</span></span></div></div>
+
+<footer>Files: icons/icon-{1024,512,192,180,128,64,48,32}.png · icons/icon-maskable-{1024,512}.png · icons/favicon.ico · manifest.webmanifest</footer>
+</body></html>
