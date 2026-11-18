@@ -864,4 +864,217 @@ function callPlayerCloser(){
   };
 })();
 </script>
+<style>
+#match .crowd{position:absolute;left:0;right:0;display:flex;flex-direction:column;justify-content:space-between;height:24%;pointer-events:none;z-index:7;opacity:0;transition:opacity .4s ease}
+#match .crowd.on{opacity:1}
+#match .field-live .field-overlay{z-index:8}
+#match .crowd-top{top:0;padding-top:4px;background:linear-gradient(180deg,rgba(3,10,20,.9),rgba(3,10,20,.5) 55%,transparent)}
+#match .crowd-bottom{bottom:0;flex-direction:column-reverse;padding-bottom:4px;background:linear-gradient(0deg,rgba(3,10,20,.9),rgba(3,10,20,.5) 55%,transparent)}
+#match .crowd-row{display:flex;justify-content:space-around;align-items:flex-end;padding:0 2px}
+#match .fan{font-size:clamp(10px,1.5vw,16px);line-height:1;transform-origin:bottom center;filter:drop-shadow(0 2px 3px #0009);will-change:transform}
+#match .crowd.on .fan{animation:crowdJump .5s ease-in-out infinite alternate}
+@keyframes crowdJump{from{transform:translateY(0) scale(1)}to{transform:translateY(-6px) scale(1.09)}}
+#match .confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:7;opacity:0;transition:opacity .3s}
+#match .confetti.on{opacity:1}
+#match .confetti i{position:absolute;top:-14px;width:6px;height:10px;border-radius:1px;animation:confFall linear infinite}
+@keyframes confFall{0%{transform:translateY(0) rotate(0);opacity:1}88%{opacity:1}100%{transform:translateY(640px) rotate(560deg);opacity:0}}
+@media(max-width:800px){#match .crowd{height:22%}}
+@media(prefers-reduced-motion:reduce){#match .crowd.on .fan,#match .confetti i{animation:none}}
+</style>
+<script>
+(function(){
+  const match=document.getElementById('match');
+  const field=match&&match.querySelector('.field-live');
+  const overlay=document.getElementById('replayOverlay');
+  if(!field||!overlay)return;
+
+  /* ---------- visual crowd ---------- */
+  const faces=['🙌','👏','🙋','🙆','🎉','🧢','📣','🤩','🫡','🔥'];
+  const colors=['#d84b26','#f3f6fb','#5fa8e8','#ffd166','#8fd694','#c58cf5'];
+  const bands=[];
+  function buildBand(where,rows,perRow){
+    const band=document.createElement('div');
+    band.className=`crowd crowd-${where}`;
+    for(let r=0;r<rows;r++){
+      const row=document.createElement('div');
+      row.className='crowd-row';
+      for(let i=0;i<perRow;i++){
+        const fan=document.createElement('span');
+        fan.className='fan';
+        fan.textContent=faces[Math.floor(Math.random()*faces.length)];
+        fan.style.animationDuration=(0.38+Math.random()*0.34).toFixed(2)+'s';
+        fan.style.animationDelay=(-Math.random()*1.2).toFixed(2)+'s';
+        row.appendChild(fan);
+      }
+      band.appendChild(row);
+    }
+    field.appendChild(band);bands.push(band);
+    return band;
+  }
+  buildBand('top',3,26);
+  buildBand('bottom',2,24);
+
+  const confetti=document.createElement('div');
+  confetti.className='confetti';
+  for(let i=0;i<34;i++){
+    const bit=document.createElement('i');
+    bit.style.left=(Math.random()*100).toFixed(2)+'%';
+    bit.style.background=colors[i%colors.length];
+    bit.style.animationDuration=(1.5+Math.random()*1.6).toFixed(2)+'s';
+    bit.style.animationDelay=(-Math.random()*2.4).toFixed(2)+'s';
+    confetti.appendChild(bit);
+  }
+  field.appendChild(confetti);
+
+  /* ---------- synthesized crowd audio ---------- */
+  const audio={ctx:null,master:null,bedGain:null,running:false,clapTimer:0,stopTimer:0};
+  function noiseBuffer(ctx,seconds,red){
+    const len=Math.floor(ctx.sampleRate*seconds),buf=ctx.createBuffer(1,len,ctx.sampleRate),data=buf.getChannelData(0);
+    let last=0;
+    for(let i=0;i<len;i++){const w=Math.random()*2-1;last=(last+red*w)/(1+red);data[i]=last*(1+red)*2.2;}
+    return buf;
+  }
+  function ensureAudio(){
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return null;
+    if(audio.ctx)return audio.ctx;
+    let ctx;
+    try{ctx=new AC();}catch(err){return null;}
+    audio.ctx=ctx;
+    const master=ctx.createGain();master.gain.value=0;
+    // Keep the roar gentle and clear of the highs so it reads as a crowd, not static.
+    const shaper=ctx.createBiquadFilter();shaper.type='lowpass';shaper.frequency.value=2400;
+    master.connect(shaper);shaper.connect(ctx.destination);
+    audio.master=master;
+
+    const bed=ctx.createBufferSource();bed.buffer=noiseBuffer(ctx,3,0.03);bed.loop=true;
+    const band=ctx.createBiquadFilter();band.type='bandpass';band.frequency.value=760;band.Q.value=0.8;
+    const high=ctx.createBiquadFilter();high.type='highpass';high.frequency.value=180;
+    const bedGain=ctx.createGain();bedGain.gain.value=0.55;
+    bed.connect(band);band.connect(high);high.connect(bedGain);bedGain.connect(master);
+    const swell=ctx.createOscillator();swell.frequency.value=0.24;
+    const swellAmt=ctx.createGain();swellAmt.gain.value=330;
+    swell.connect(swellAmt);swellAmt.connect(band.frequency);swell.start();
+    const pulse=ctx.createOscillator();pulse.frequency.value=0.41;
+    const pulseAmt=ctx.createGain();pulseAmt.gain.value=0.14;
+    pulse.connect(pulseAmt);pulseAmt.connect(bedGain.gain);pulse.start();
+    bed.start();
+    audio.bedGain=bedGain;
+    return ctx;
+  }
+  function clap(){
+    const ctx=audio.ctx;if(!ctx||!audio.running)return;
+    const src=ctx.createBufferSource();src.buffer=noiseBuffer(ctx,0.09,0.5);
+    const bp=ctx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=1700+Math.random()*700;bp.Q.value=1.1;
+    const g=ctx.createGain();g.gain.setValueAtTime(0.0001,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.09+Math.random()*0.05,ctx.currentTime+0.006);
+    g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+0.09);
+    src.connect(bp);bp.connect(g);g.connect(audio.master);src.start();
+  }
+  function startAudio(){
+    const ctx=ensureAudio();if(!ctx)return;
+    if(ctx.state==='suspended')ctx.resume();
+    clearTimeout(audio.stopTimer);clearInterval(audio.clapTimer);
+    audio.running=true;
+    audio.master.gain.cancelScheduledValues(ctx.currentTime);
+    audio.master.gain.setValueAtTime(audio.master.gain.value,ctx.currentTime);
+    audio.master.gain.linearRampToValueAtTime(0.16,ctx.currentTime+0.45);
+    audio.clapTimer=setInterval(()=>{if(Math.random()<0.85)clap();},400);
+  }
+  function stopAudio(fast){
+    clearInterval(audio.clapTimer);audio.clapTimer=0;
+    if(!audio.ctx||!audio.master)return;
+    const ctx=audio.ctx,now=ctx.currentTime;
+    audio.running=false;
+    audio.master.gain.cancelScheduledValues(now);
+    audio.master.gain.setValueAtTime(audio.master.gain.value,now);
+    audio.master.gain.linearRampToValueAtTime(0,now+(fast?0.25:1.1));
+  }
+
+  // Browsers only unlock audio from a user gesture; retry on the first tap/keypress.
+  ['pointerdown','keydown'].forEach(type=>document.addEventListener(type,()=>{
+    if(audio.ctx&&audio.ctx.state==='suspended'&&cheering)audio.ctx.resume();
+  },{passive:true}));
+
+  /* ---------- lifecycle: touchdown -> replay end ---------- */
+  let cheering=false,replaySeen=false;
+  function startCheer(){
+    if(cheering)return;
+    cheering=true;replaySeen=false;
+    bands.forEach(b=>b.classList.add('on'));
+    confetti.classList.add('on');
+    startAudio();
+    clearTimeout(audio.stopTimer);
+    // Safety net so the roar can never outlive a stalled replay.
+    audio.stopTimer=setTimeout(stopCheer,30000);
+  }
+  function stopCheer(fast){
+    if(!cheering)return;
+    cheering=false;
+    bands.forEach(b=>b.classList.remove('on'));
+    confetti.classList.remove('on');
+    stopAudio(fast===true);
+    clearTimeout(audio.stopTimer);audio.stopTimer=0;
+  }
+  function checkReplay(){
+    if(!cheering)return;
+    if(match.classList.contains('hidden')){stopCheer();return;}
+    const showing=overlay.style.display==='flex';
+    if(showing){replaySeen=true;return;}
+    if(replaySeen)stopCheer();
+  }
+  new MutationObserver(checkReplay).observe(overlay,{attributes:true,attributeFilter:['style']});
+  new MutationObserver(checkReplay).observe(match,{attributes:true,attributeFilter:['class']});
+
+  const previousEndLivePlay=window.endLivePlay;
+  window.endLivePlay=function(message){
+    const result=previousEndLivePlay.apply(this,arguments);
+    if(/touchdown/i.test(String(message||'')))startCheer();
+    return result;
+  };
+
+  // Leaving GAME DAY (schedule button, forfeit, exit) silences the crowd at once.
+  match.addEventListener('click',ev=>{
+    const btn=ev.target.closest('button');
+    if(!btn)return;
+    const label=(btn.textContent||'').trim();
+    if(/schedule|forfeit|exit/i.test(label))stopCheer();
+  },true);
+  window.addEventListener('pagehide',()=>stopCheer(true));
+})();
+</script>
+<style>
+/* Controller: bigger joystick on the left with RUN, every other button boxed on the right. */
+.field-live>.controller .controller-actions{display:flex;align-items:stretch;justify-content:space-between;gap:8px}
+.field-live>.controller .run-with-stick{flex:0 1 auto;margin:0;gap:8px}
+.field-live>.controller .run-with-stick .btn{flex:0 1 auto;min-width:118px;padding:6px 14px;font-size:12px}
+.field-live>.controller .run-joystick{width:70px;height:70px;flex-basis:70px}
+.field-live>.controller .run-joystick-knob{width:35px;height:35px}
+.field-live>.controller .action-pad{flex:0 0 auto;margin-left:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:6px;border:1px solid #4d6d8e;border-radius:10px;background:linear-gradient(180deg,#0c2036e0,#081727e0);box-shadow:inset 0 1px 0 #ffffff18,0 2px 8px #0006}
+.field-live>.controller .action-pad>.btn{margin:0;min-height:38px;height:38px;padding:6px 9px;font-size:11px;line-height:1.1;white-space:nowrap}
+/* Narrow screens: the stick keeps its own row and the box spans the width below it. */
+@media(max-width:1000px){
+  .field-live>.controller .controller-actions{flex-wrap:wrap;gap:6px}
+  .field-live>.controller .run-with-stick{flex:1 1 100%}
+  .field-live>.controller .action-pad{flex:1 1 100%;margin-left:0;gap:4px;padding:4px;border-radius:8px;grid-template-columns:repeat(5,minmax(0,1fr))}
+  .field-live>.controller .action-pad>.btn{min-height:38px;height:auto;padding:4px 3px;font-size:10px;white-space:normal;line-height:1.15}
+}
+@media(max-width:800px){
+  .field-live>.controller .controller-actions{gap:5px}
+  .field-live>.controller .run-joystick{width:57px;height:57px;flex-basis:57px}
+  .field-live>.controller .run-joystick-knob{width:28px;height:28px}
+  .field-live>.controller .action-pad>.btn{font-size:9px;padding:4px 2px}
+}
+</style>
+<script>
+(function(){
+  const actions=document.querySelector('#match .controller-actions');
+  if(!actions)return;
+  const pad=document.createElement('div');
+  pad.className='action-pad';
+  // Every button except RUN belongs in the right-hand box.
+  actions.querySelectorAll(':scope > .btn').forEach(btn=>pad.appendChild(btn));
+  actions.appendChild(pad);
+})();
+</script>
 </body></html>
