@@ -1,7 +1,7 @@
 {
   "name": "Touchdown \u2014 Franchise Mode",
   "short_name": "Touchdown",
-  "description": "Build a lineup for any NFL franchise, play a 17-game season and chase the Super Bowl.",
+  "description": "Build a lineup for any National Gridiron League club, play a 17-game season and chase the Gridiron Cup.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
